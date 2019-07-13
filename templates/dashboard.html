@@ -19,18 +19,18 @@ Dashboard
           {% if messages %}
             <div class="row">
                 <h3>New messages</h3><br>
-    <!--        {% if current_user.email == form.receiver_email %}-->
-                    {% for msg in messages %}
-                    <div class="col-md-2">
-                        <div class="card" id="{{ msg.id }}" style="width: 18rem;" onclick="window.location.href='/messages/{{ msg.id }}'">
-                            <div class="card-body">
-                                <h5 class="card-title">Message from: {{ msg.sender }}</h5>
-                                <p class="card-text">Subject: {{ msg.subject }}</p>
+                {% if current_user.email == form.receiver_email %}
+                        {% for msg in messages %}
+                        <div class="col-md-2">
+                            <div class="card" id="{{ msg.id }}" style="width: 18rem;" onclick="window.location.href='/messages/{{ msg.id }}'">
+                                <div class="card-body">
+                                    <h5 class="card-title">Message from: {{ msg.sender }}</h5>
+                                    <p class="card-text">Subject: {{ msg.subject }}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    {% endfor %}
-    <!--        {% endif %}-->
+                        {% endfor %}
+                {% endif %}
           {% endif %}
 
           </div><br>
