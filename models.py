@@ -51,5 +51,5 @@ def get_choices(my_user):
 
 class Messageform(FlaskForm):
     subject = StringField("Subject", validators=[InputRequired(), Length(min=4, max=500)])
-    message = StringField("Message", validatos=[InputRequired(), Length(min=4, max=500)])
-    receiver_email = SelectField("Receiver email", validatos=[InputRequired(), Email("Introduce a valid email address"), Length(min=4, max=50)])
+    message = StringField("Message", validators=[InputRequired(), Length(min=4, max=500)])
+    receiver_email = SelectField("Receiver email", validators=[InputRequired(), Email("Introduce a valid email address"), Length(min=4, max=50)])

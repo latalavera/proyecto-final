@@ -19,7 +19,7 @@ Dashboard
           {% if messages %}
             <div class="row">
                 <h3>New messages</h3><br>
-                {% if current_user.email == form.receiver_email %}
+<!--                {% if current_user.email == form.receiver_email %}-->
                         {% for msg in messages %}
                         <div class="col-md-2">
                             <div class="card" id="{{ msg.id }}" style="width: 18rem;" onclick="window.location.href='/messages/{{ msg.id }}'">
@@ -30,13 +30,13 @@ Dashboard
                             </div>
                         </div>
                         {% endfor %}
-                {% endif %}
+<!--                {% endif %}-->
           {% endif %}
 
           </div><br>
 
-          <div class="row justify-content-center">
-           <div class="col-md-4" >
+          <div class="row ">
+           <div class="col-12" >
                <h3>Send message</h3>
                <form method="post" action="/dashboard" class="form-group">
                 {{ form.hidden_tag() }}

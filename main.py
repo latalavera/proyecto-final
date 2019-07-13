@@ -57,7 +57,7 @@ def dashboard():
     form = Messageform()
     form.receiver_email.choices = get_choices(current_user)
     if request.method == "GET":
-        messages = db.query(Mensaje).filter_by(read=0).order_by(Mensaje.date.desc())
+        messages = db.query(Mensaje).filter_by(receiver=current_user.email).all()
         return render_template("dashboard.html", messages=messages, form=form, current_user=current_user, users=users)
 
     else:
