@@ -4,3 +4,5 @@ sqla-wrapper
 psycopg2
 requests
 flask-bootstrap
+wtforms
+werkzeug
