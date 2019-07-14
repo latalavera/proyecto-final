@@ -12,42 +12,41 @@ Dashboard
 
 {% block content %}
 
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Welcome {{ current_user.name }}</h1>
           {% if messages %}
+            <h3>New messages</h3><br>
             <div class="row">
-                <h3>New messages</h3><br>
-<!--                {% if current_user.email == form.receiver_email %}-->
-                        {% for msg in messages %}
-                        <div class="col-md-2">
-                            <div class="card" id="{{ msg.id }}" style="width: 18rem;" onclick="window.location.href='/messages/{{ msg.id }}'">
-                                <div class="card-body">
-                                    <h5 class="card-title">Message from: {{ msg.sender }}</h5>
-                                    <p class="card-text">Subject: {{ msg.subject }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
-<!--                {% endif %}-->
-          {% endif %}
+                {% for msg in messages %}
+                  <div class="col-md-3">
+                    <div class="card" id="{{ msg.id }}" style="width: 18rem;" onclick="window.location.href='/messages/{{ msg.id }}'">
+                      <div class="card-body">
+                        <h5 class="card-title">Message from: {{ msg.sender }}</h5>
+                        <p class="card-text">Subject: {{ msg.subject }}</p>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+           {% endif %}
 
           </div><br>
-
-          <div class="row ">
-           <div class="col-12" >
-               <h3>Send message</h3>
-               <form method="post" action="/dashboard" class="form-group">
+            <h3>Send message</h3>
+          <div class="row">
+           <div class="col-md-12">
+           <form method="post" action="/dashboard" class="form-group">
+               <div class="form-group">
                 {{ form.hidden_tag() }}
                 {{ wtf.form_field(form.subject) }}
                 {{ wtf.form_field(form.message) }}
                 {{ wtf.form_field(form.receiver_email) }}
-                 <button class="btn btn-secondary btn-block" type="submit">Send</button>
+                <button class="btn btn-secondary btn-block" type="submit">Send</button>
+               </div>
                 {% if data %}
                    <h5>{{ data }}</h5>
                 {% endif %}
-                </form>
+           </form>
           </div>
       </div>
     </div>
