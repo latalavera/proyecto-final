@@ -53,11 +53,11 @@ def signup():
 @app.route("/dashboard", methods=["GET", "POST"])
 @login_required
 def dashboard():
-    users = db.query(User).all()
     form = Messageform()
     form.receiver_email.choices = get_choices(current_user)
     if request.method == "GET":
-        messages = db.query(Mensaje).filter_by(receiver=current_user.email).all()
+        messages = db.query(Mensaje).filter_by(receiver=current_user.email, read=False).all()
+        users = db.query(User).all()
         return render_template("dashboard.html", messages=messages, form=form, current_user=current_user, users=users)
 
     else:
@@ -67,8 +67,7 @@ def dashboard():
             db.add(msg)
             db.commit()
             data = "Your message has been sent"
-            return render_template("dashboard.html", data=data, form=form, current_user=current_user, users=users,
-                                   msg=msg)
+            return render_template("dashboard.html", data=data, form=form, current_user=current_user, msg=msg)
 
 
 @app.route('/messages/<msg_id>')
@@ -87,6 +86,8 @@ def message_details(msg_id):
 
     for msg in non_read:
         msg.read = True
+        db.add(msg)
+        db.commit()
 
     return render_template("messages.html", msg_read=read, msg_non_read=non_read, current_user=current_user)
 
