@@ -3,11 +3,15 @@
 
 
 {% block content %}
-{% for message in msg_read %}
-    {{ message.date }} - {{ message.sender }} : {{ message.message }}<br>
-{% endfor %}
+{% if msg_read %}
+    <br><h4>Old messages</h4><br>
+    {% for message in msg_read %}
+        {{ message.date }} - {{ message.sender }} : {{ message.message }}<br>
+    {% endfor %}
+{% endif %}
+
 {% if msg_non_read %}
-    <br><h4>Unread messages</h4><br>
+    <br><h4>Non-read messages</h4><br>
     {% for message in msg_non_read %}
         {{ message.date }} - {{ message.sender }} : {{ message.message }}<br>
     {% endfor %}
