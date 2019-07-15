@@ -3,18 +3,27 @@
 
 
 {% block content %}
-{% if msg_read %}
-    <br><h4>Old messages</h4><br>
-    {% for message in msg_read %}
-        {{ message.date }} - {{ message.sender }} : {{ message.message }}<br>
-    {% endfor %}
-{% endif %}
+{% if no_msg %}
+    <br><h4>No messages</h4><br>
+{% else %}
+    {% if msg_read %}
+        <br><h4>Old messages</h4><br>
+        {% for message in msg_read %}
+            {{ message.date }} - {{ message.sender }} : {{ message.message }}<br>
+        {% endfor %}
+    {% endif %}
 
-{% if msg_non_read %}
-    <br><h4>Non-read messages</h4><br>
-    {% for message in msg_non_read %}
-        {{ message.date }} - {{ message.sender }} : {{ message.message }}<br>
-    {% endfor %}
+    {% if msg_non_read %}
+        <br><h4>Non-read messages</h4><br>
+        {% for message in msg_non_read %}
+            {{ message.date }} - {{ message.sender }} : {{ message.message }}<br>
+        {% endfor %}
+    {% endif %}
+
+    {% if current_msg %}
+        <br><h4>{{ current_msg.subject }}</h4><br>
+        {{ current_msg.date }} - {{ current_msg.sender }} : {{ current_msg.message }}<br>
+    {% endif %}
 {% endif %}
 
 
