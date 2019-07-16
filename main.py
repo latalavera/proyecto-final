@@ -68,28 +68,42 @@ def dashboard():
             db.commit()
             data = "Your message has been sent"
             return render_template("dashboard.html", data=data, form=form, current_user=current_user, msg=msg)
+        else:
+            data = "Error, review the entered data"
+            return render_template("dashboard.html", data=data, form=form, current_user=current_user)
 
 
+@app.route('/messages')
 @app.route('/messages/<msg_id>')
 @login_required
-def message_details(msg_id):
-    msg = db.query(Mensaje).get(int(msg_id))
-    msg_sender = list(db.query(Mensaje).filter_by(sender=msg.sender))
-    msg_receiver = list(db.query(Mensaje).filter_by(receiver=msg.receiver))
+def message_details(msg_id=None):
+    if msg_id:
+        msg = db.query(Mensaje).get(int(msg_id))
 
-    messages = msg_sender + msg_receiver
+        if msg and msg.receiver==current_user.email:
+            msg.read = True
+            db.add(msg)
+            db.commit()
 
-    messages.sort(key=lambda s: s.date)
+            return render_template("messages.html", current_msg=msg, current_user=current_user)
+        else:
+            return "Message ID not valid!"
+    else:
+        messages = list(db.query(Mensaje).filter_by(receiver=current_user.email))
 
-    read = list(filter(lambda s: s.read, messages))
-    non_read = list(filter(lambda s: not s.read, messages))
+        messages.sort(key=lambda s: s.date)
 
-    for msg in non_read:
-        msg.read = True
-        db.add(msg)
-        db.commit()
+        read = list(filter(lambda s: s.read, messages))
+        non_read = list(filter(lambda s: not s.read, messages))
 
-    return render_template("messages.html", msg_read=read, msg_non_read=non_read, current_user=current_user)
+        for msg in non_read:
+            msg.read = True
+            db.add(msg)
+            db.commit()
+
+        return render_template("messages.html", msg_read=read, msg_non_read=non_read, current_user=current_user)
+
+    return render_template("messages.html", no_msg=True)
 
 
 @app.route('/logout')

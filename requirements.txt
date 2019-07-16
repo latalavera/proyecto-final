@@ -6,3 +6,5 @@ requests
 flask-bootstrap
 wtforms
 werkzeug
+flask_wtf
+flask_login
