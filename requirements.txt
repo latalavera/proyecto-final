@@ -1,5 +1,5 @@
 Flask==2.3.2
-gunicorn==19.9.0
+gunicorn==22.0.0
 sqla-wrapper
 psycopg2
 requests
